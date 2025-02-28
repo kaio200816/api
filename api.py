@@ -25,4 +25,5 @@ def download_video():
         return jsonify({"error": "Erro ao baixar o vídeo"}), 500
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=5000, debug=True)  # Servidor rodando no localhost:5000
+    PORT = int(os.environ.get("PORT", 5000))  # Pega a porta do ambiente da Render
+    app.run(host="0.0.0.0", port=PORT, debug=True)
