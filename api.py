@@ -1,15 +1,12 @@
-from flask import Flask, request, jsonify, send_from_directory
 import subprocess
 import os
 
-app = Flask(__name__)
-
-DOWNLOAD_FOLDER = os.path.join(os.getcwd(), "downloads")  # Pasta para salvar os vídeos
-os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)  # Cria a pasta se não existir
-
-@app.route('/')
-def home():
-    return "API de download de vídeo está funcionando. Use o endpoint /download para baixar vídeos."
+def get_downloaded_file(output_path):
+    # Procurar na pasta de downloads o arquivo gerado pelo yt-dlp
+    for file in os.listdir(DOWNLOAD_FOLDER):
+        if file.endswith(".mp4"):  # Procuramos apenas arquivos MP4
+            return file
+    return None
 
 @app.route('/download', methods=['POST'])
 def download_video():
@@ -48,18 +45,3 @@ def download_video():
         return jsonify({"error": "yt-dlp não encontrado. Por favor, instale o yt-dlp."}), 500
     except Exception as e:
         return jsonify({"error": "Erro inesperado", "details": str(e)}), 500
-
-@app.route('/download/<filename>')
-def serve_file(filename):
-    return send_from_directory(DOWNLOAD_FOLDER, filename)
-
-def get_downloaded_file(output_path):
-    # Procurar na pasta de downloads o arquivo gerado pelo yt-dlp
-    for file in os.listdir(DOWNLOAD_FOLDER):
-        if file.endswith(".mp4"):  # Procuramos apenas arquivos MP4
-            return file
-    return None
-
-if __name__ == '__main__':
-    PORT = int(os.environ.get("PORT", 5000))  # Pega a porta do ambiente da Render
-    app.run(host="0.0.0.0", port=PORT, debug=True)
