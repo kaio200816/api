@@ -1,12 +1,14 @@
 {
   "name": "minecraft-discord-api",
   "version": "1.0.0",
-  "main": "api/relay.js",
   "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel --prod"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
-    "node-fetch": "^2.7.0"
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
