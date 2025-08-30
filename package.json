@@ -1,0 +1,7 @@
+{
+  "name": "minecraft-discord-api",
+  "version": "1.0.0",
+  "main": "api/relay.js",
+  "type": "module",
+  "dependencies": {}
+}
